@@ -1,0 +1,4 @@
+rootProject.name = 'sqool-internal-service'
+
+include 'sqool-common-service'
+include 'sqool-erp-service'

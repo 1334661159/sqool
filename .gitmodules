@@ -1,0 +1,3 @@
+[submodule "sqool-common-service"]
+	path = sqool-common-service
+	url = ../../spark_shen/sqool-common-service.git

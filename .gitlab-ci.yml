@@ -1,0 +1,29 @@
+image: java:8-jdk
+
+before_script:
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
+
+build:
+  stage: build
+  script:
+    - ./gradlew build
+  artifacts:
+    paths:
+      - ./sqool-erp-service/build/libs/*.jar
+    expire_in: 1 day
+  only:
+    - master
+
+
+

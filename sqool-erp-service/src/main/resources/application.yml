@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: sqool-erp-service
+  datasource: # 数据库连接
+    platform: postgres
+
+    #local
+    url: jdbc:postgresql://localhost:5432/sqool?useSSL=false
+    username: postgres
+    password: Passw0rd
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+
+server:
+  port: 8002
+
+wx:
+  app-id: wx6494fd983d3b87b7
+  secret: ed50ad5377fa7a688186621ab56b796f
+
+wx-open:
+  app-id: wx724530f9afcf0384
+  secret: 772f298d5c16650c994be67918c194c5
+
+graphql:
+  spqr:
+    gui:
+      enabled: true
+    relay:
+      connection-check-relaxed: true
+
+logging:
+    level:
+        root: INFO
+        com.abuqool: DEBUG
+        org.springframework.web: INFO
+        org.hibernate: ERROR
+    file: logs/server.log
