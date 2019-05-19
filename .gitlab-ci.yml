@@ -1,9 +1,13 @@
 image: java:8-jdk
 
 stages:
-  - build
   - test
-  - deploy
+  - build
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
 
 build:
   stage: build
@@ -12,13 +16,6 @@ build:
   artifacts:
     paths:
       - build/libs/*.jar
-    expire_in: 1 week
+    expire_in: 1 day
   only:
     - master
-
-test:
-  stage: test
-  script:
-    - ./gradlew check
-
-
