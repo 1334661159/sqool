@@ -1,0 +1,59 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.4.RELEASE'
+    }
+    repositories {
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id "io.spring.dependency-management" version "1.0.5.RELEASE"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+bootJar {
+    baseName = 'sqool-erp-service'
+    version = '1.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile project(':sqool-common-service')
+    implementation 'com.alibaba:fastjson:1.2.54'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.5'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.4'
+    implementation 'com.google.code.gson:gson:2.6.1'
+
+    implementation 'io.leangen.graphql:graphql-spqr-spring-boot-starter:0.0.4'
+
+    implementation 'org.apache.poi:poi:3.7'
+    implementation 'org.apache.poi:poi-ooxml:3.7'
+    implementation 'org.apache.poi:poi-ooxml-schemas:3.7'
+
+    implementation 'joda-time:joda-time:2.9.9'
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    compileOnly 'org.projectlombok:lombok'
+
+}
