@@ -5,18 +5,14 @@ before_script:
   - git submodule update --init --recursive
 
 stages:
-  - test
   - build
   - deploy
 
-test:
-  stage: test
-  script:
-    - ./gradlew check
 
 build:
   stage: build
   script:
+    - ./gradlew check
     - ./gradlew build
   artifacts:
     paths:
