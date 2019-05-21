@@ -25,13 +25,12 @@ deploy:
   script:
     - apt-get update -y && apt-get install -y openssh-client
     - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY"
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - scp -r sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
+    - scp -r ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
     - ssh ubuntu@212.64.60.130
     - cd /home/ubuntu/sqool/sqool-internal-service/
 #    - ./restart_server.sh
