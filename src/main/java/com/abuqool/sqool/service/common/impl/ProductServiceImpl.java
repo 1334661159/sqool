@@ -2,7 +2,9 @@ package com.abuqool.sqool.service.common.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -38,27 +40,34 @@ public class ProductServiceImpl implements ProductService{
         ProductInfo productInfo = productRepo.findById(product.getId()).get();
         if(productInfo != null) {
             Set<ProductStockUnitInfo> sku = productInfo.getSkuSet();
-            return populateSkuList(product.getSchoolCode(), sku);
+            return populateSkuList(product.getSchoolCode(), sku, false);
         }
         return null;
     }
 
-    private List<ProductStockUnit> populateSkuList(String schoolCode, Collection<ProductStockUnitInfo> sku) {
+    private List<ProductStockUnit> populateSkuList(String schoolCode, Collection<ProductStockUnitInfo> sku, boolean checkQty) {
         if(sku != null) {
             List<ProductStockUnit> list = new ArrayList<>(sku.size());
-            for(ProductStockUnitInfo s : sku) {
-                if(s.getQuantity() > 0 && s.getStatus() != PRODUCT_STATUS_DELETED) {//only return sku with stocks
-                    boolean valid = false;
-                    if(StringUtils.isEmpty(schoolCode)) {
-                        valid = true;
-                    }else {
-                        ListingInfo l = listingRepo.findBySchoolCodeAndProductId(schoolCode, s.getProduct().getId());
-                        if(l.getStatus() == LISTING_STATUS_ACTIVE && s.getCode().contains(l.getSkuPattern())) {
+            if(sku.size() > 0) {
+                Map<Integer, ListingInfo> cache = new HashMap<>(sku.size());
+                for(ProductStockUnitInfo s : sku) {
+                    if(s.getStatus() != PRODUCT_STATUS_DELETED) {//only return sku with stocks
+                        boolean valid = false;
+                        if(StringUtils.isEmpty(schoolCode)) {
                             valid = true;
+                        }else {
+                            ListingInfo l = cache.get(s.getProduct().getId());
+                            if(l == null) {
+                                l = listingRepo.findBySchoolCodeAndProductId(schoolCode, s.getProduct().getId());
+                                cache.put(s.getProduct().getId(), l);
+                            }
+                            if(l != null && l.getStatus() == LISTING_STATUS_ACTIVE && s.getCode().contains(l.getSkuPattern())) {
+                                valid = !(checkQty && s.getQuantity() == 0);
+                            }
                         }
-                    }
-                    if(valid) {
-                        list.add(ProductStockUnit.populate(s));
+                        if(valid) {
+                            list.add(ProductStockUnit.populate(s));
+                        }
                     }
                 }
             }
@@ -72,7 +81,7 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductStockUnit> findSku4School(String schoolCode, List<Integer> idList) {
         List<ProductStockUnitInfo> list = productStockUnitRepo.findAllById(idList);
         if(list != null) {
-            List<ProductStockUnit> sku = populateSkuList(schoolCode, list);
+            List<ProductStockUnit> sku = populateSkuList(schoolCode, list, true);
             return sku;
         }
         return null;
