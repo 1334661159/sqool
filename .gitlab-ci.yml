@@ -10,6 +10,10 @@ build:
   script:
     - git submodule sync --recursive
     - git submodule update --init --recursive
+    - cd sqool-common-service
+    - git checkout master
+    - git fetch && git rebase
+    - cd ..
     - ./gradlew check
     - ./gradlew build
   artifacts:
