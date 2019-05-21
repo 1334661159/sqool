@@ -30,9 +30,9 @@ deploy:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - scp -r sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-service/
+    - scp -r sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
     - ssh ubuntu@212.64.60.130
-    - cd /home/ubuntu/sqool/sqool-service/
+    - cd /home/ubuntu/sqool/sqool-internal-service/
 #    - ./restart_server.sh
     - ll
   only:
