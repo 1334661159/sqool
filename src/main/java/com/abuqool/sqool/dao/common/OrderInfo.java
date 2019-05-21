@@ -48,8 +48,19 @@ public class OrderInfo extends AbstractConsigneeInfo{
     @Column(name="grade")
     private String grade;
 
+    @Column(name="channel_code")
+    private String channelCode;
+
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 //    private Set<ProductOrderUnitInfo> puSet = new HashSet<>();
+
+    public String getChannelCode() {
+        return channelCode;
+    }
+
+    public void setChannelCode(String channelCode) {
+        this.channelCode = channelCode;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -67,13 +78,6 @@ public class OrderInfo extends AbstractConsigneeInfo{
         this.paymentTxId = paymentTxId;
     }
 
-    public Double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(Double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 
     public int getStatus() {
         return status;
@@ -105,6 +109,14 @@ public class OrderInfo extends AbstractConsigneeInfo{
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
 //    public Set<ProductOrderUnitInfo> getPuSet() {
