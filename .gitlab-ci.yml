@@ -4,24 +4,24 @@ stages:
   - deploy
 
 
-build:
-  image: java:8-jdk
-  stage: build
-  script:
-    - git submodule sync --recursive
-    - git submodule update --init --recursive
-    - cd sqool-common-service
-    - git checkout master
-    - git fetch && git rebase
-    - cd ..
-    - ./gradlew check
-    - ./gradlew build
-  artifacts:
-    paths:
-      - ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar
-    expire_in: 1 day
-  only:
-    - master
+# build:
+#   image: java:8-jdk
+#   stage: build
+#   script:
+#     - git submodule sync --recursive
+#     - git submodule update --init --recursive
+#     - cd sqool-common-service
+#     - git checkout master
+#     - git fetch && git rebase
+#     - cd ..
+#     - ./gradlew check
+#     - ./gradlew build
+#   artifacts:
+#     paths:
+#       - ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar
+#     expire_in: 1 day
+#   only:
+#     - master
 
 deploy:
   image: ubuntu:18.04
@@ -34,10 +34,11 @@ deploy:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - scp -r ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
+    # - scp -r ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
     - ssh ubuntu@212.64.60.130
-    - cd ./sqool/sqool-internal-service/
+    # - cd ./sqool/sqool-internal-service/
 #    - ./restart_server.sh
+    - pwd
     - ll
   only:
     - master
