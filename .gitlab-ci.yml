@@ -36,7 +36,7 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     - scp -r ./sqool-erp-service/build/libs/sqool-erp-service-1.1.0.jar ubuntu@212.64.60.130:/home/ubuntu/sqool/sqool-internal-service/
     - ssh ubuntu@212.64.60.130
-    - cd /home/ubuntu/sqool/sqool-internal-service/
+    - cd ./sqool/sqool-internal-service/
 #    - ./restart_server.sh
     - ll
   only:
