@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Passw0rd
+      - POSTGRES_DB=sqool
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@abuqool.com
+      - PGADMIN_DEFAULT_PASSWORD=Passw0rd
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - /tmp/pgadmin-servers.json:/servers.json
+    ports:
+      - 5555:80
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  pgadmin-data:
+    driver: local
