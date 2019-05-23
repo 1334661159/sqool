@@ -13,6 +13,7 @@ import com.abuqool.sqool.vo.ColorOption;
 import com.abuqool.sqool.vo.Product;
 import com.abuqool.sqool.vo.ProductStockUnit;
 
+import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
@@ -54,6 +55,13 @@ public class MgmtProductSchema {
         }
         return productService.findProduct(id, schoolCode);
     }
+
+    @GraphQLQuery
+    public List<ProductStockUnit> stockUnit(@GraphQLContext Product product){
+        List<ProductStockUnit> sku = productService.findSku4Product(product);
+        return sku;
+    }
+
 
     @GraphQLMutation
     public Product admSaveProduct(String token, Integer id, String schoolCode, String code, String title, String picUrl, String gender,
