@@ -15,7 +15,7 @@ public class BaseWebController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String index(){
-        return "index";
+        return "template/index";
     }
     public static void main(String[] args) {
 
