@@ -1,10 +1,17 @@
 package com.abuqool.sqool.service.file.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.abuqool.sqool.integration.qcloud.QCloudService;
+import com.abuqool.sqool.service.file.StorageService;
+import com.abuqool.sqool.service.mgmt.MgmtProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,18 +23,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.abuqool.sqool.integration.qcloud.QCloudService;
-import com.abuqool.sqool.service.file.StorageService;
-import com.abuqool.sqool.service.mgmt.MgmtProductService;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -75,7 +70,7 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
-    public Path saveAsFile(String filename, InputStream inputStream) throws IOException {
+    public Path saveAsFile(String filename,InputStream inputStream) throws IOException {
         if (filename.contains("..")) {
             // This is a security check
             throw new StorageException(
