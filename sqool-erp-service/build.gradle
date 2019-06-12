@@ -55,5 +55,13 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     compileOnly 'org.projectlombok:lombok'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.0.1'
+    compile group: 'com.alipay.sdk', name: 'alipay-sdk-java', version: '3.7.4.ALL'
+    compile group: 'io.swagger', name: 'swagger-annotations', version: '2.0.0-rc2'
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.2'
+    compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: '4.2.2'
+
+
+
 
 }

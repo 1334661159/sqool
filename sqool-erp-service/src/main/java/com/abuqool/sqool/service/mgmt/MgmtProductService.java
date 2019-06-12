@@ -1,13 +1,16 @@
 package com.abuqool.sqool.service.mgmt;
 
-import java.util.List;
-import java.util.Map;
-
 import com.abuqool.sqool.service.common.ProductService;
+import com.abuqool.sqool.service.mgmt.impl.MgmtProductServiceImpl;
 import com.abuqool.sqool.vo.ColorOption;
 import com.abuqool.sqool.vo.Product;
 import com.abuqool.sqool.vo.ProductStockUnit;
+import com.google.inject.ImplementedBy;
 
+import java.util.List;
+import java.util.Map;
+
+@ImplementedBy(MgmtProductServiceImpl.class)
 public interface MgmtProductService extends ProductService{
 
     List<Product> findProducts();

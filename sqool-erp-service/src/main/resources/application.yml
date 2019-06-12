@@ -1,4 +1,16 @@
 spring:
+  thymeleaf:
+    prefix: classpath:/template/
+    suffix: .html
+    mode: HTML5
+    encoding: utf-8
+    cache: false
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
   application:
     name: sqool-erp-service
   datasource: # 数据库连接
@@ -17,6 +29,7 @@ spring:
     properties:
       hibernate:
         temp:
+          #关闭让hibernate验证postgresql的CLOB特性，避免抛出异常
           use_jdbc_metadata_defaults: false
 
 server:
@@ -43,4 +56,8 @@ logging:
         com.abuqool: DEBUG
         org.springframework.web: INFO
         org.hibernate: ERROR
-    file: logs/server.log
+        org.mybatis: error
+      #    file: logs/server.log
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.abuqool.sqool.dao.common
